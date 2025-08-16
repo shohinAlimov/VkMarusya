@@ -1,0 +1,71 @@
+@use "../../assets/styles/variables.scss" as *;
+
+.random-film {
+  margin: 40px 0 20px;
+  &__wrapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 60px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    &-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 12px;
+      border-radius: 16px;
+      color: $color-white;
+      background-color: #308e21;
+    }
+
+    &-release,
+    &-genre,
+    &-duration {
+      font-size: 18px;
+      line-height: 24px;
+      color: rgba($color: $color-white, $alpha: 0.7);
+    }
+
+    &-title {
+      font-size: 48px;
+      line-height: 56px;
+      color: $color-white;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    &-description {
+      margin: 0;
+      font-size: 24px;
+      line-height: 32px;
+      color: rgba($color: $color-white, $alpha: 0.7);
+      margin: 0 0 44px 0;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__poster {
+    width: fit-content;
+    max-height: 600px;
+    border-radius: 16px;
+  }
+}
