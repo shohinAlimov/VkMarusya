@@ -1,0 +1,62 @@
+@use "../../assets//styles/variables.scss" as *;
+
+.top-movies {
+  padding: 40px 0 120px;
+  &__title {
+    font-size: 40px;
+    line-height: 48px;
+    color: $color-white;
+    margin: 0 0 64px 0;
+  }
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    gap: 40px;
+  }
+
+  &__item {
+    height: 336px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  &__card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    &-index {
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      padding: 8px 24px;
+      background-color: $color-white;
+      border-radius: 50px;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 700;
+      color: #6a5dc2;
+    }
+
+    &-poster {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border-radius: 16px;
+      border: 1px solid rgba($color: #ffffff, $alpha: 0.25);
+      box-shadow: 0px 0px 80px 0px rgba(255, 255, 255, 0.33);
+    }
+  }
+}

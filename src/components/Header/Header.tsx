@@ -3,28 +3,24 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../assets/icons/vk-marusya-logo.svg?react";
 import IconSearch from "../../assets/icons/IconSearch.svg?react";
 import { useState } from "react";
-import IconClose from "../../assets/icons/IconClose.svg?react";
-import LogoDark from "../../assets/icons/vk-marusya-logo-dark.svg?react";
+import Modal from "../Modal/Modal";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
+
 const Header = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const username = useSelector((state: RootState) => state.auth.user?.name);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const handleOpenModal = () => {
     setModalOpen(true);
-    document.body.style.overflow = "hidden"; // запретить прокрутку
   };
 
-  const handleLogin = () => {
+  const handleCloseModal = () => {
     setModalOpen(false);
-    document.body.style.overflow = "";
-    console.log("Login Information", email, password);
-  };
-
-  const handleClose = () => {
-    setModalOpen(false);
-    document.body.style.overflow = "";
   };
 
   return (
@@ -49,7 +45,7 @@ const Header = () => {
                     }
                     to="/"
                   >
-                    Главная
+                    Home
                   </NavLink>
                 </li>
                 <li>
@@ -59,63 +55,42 @@ const Header = () => {
                     }
                     to="/genres"
                   >
-                    Жанры
+                    Genres
                   </NavLink>
                 </li>
               </ul>
             </nav>
-            <div className="custom-input">
+            <div className="header__search">
               <IconSearch
-                className="custom-input__icon"
+                className="header__search-icon"
                 width={24}
                 height={24}
                 aria-hidden={true}
               />
               <input
-                className="custom-input__field"
+                className="header__search-field"
                 type="text"
-                placeholder="Поиск"
+                placeholder="Search"
               />
             </div>
           </div>
-          <button className="btn header__btn-login" onClick={handleOpenModal}>
-            Войти
-          </button>
-        </div>
-      </div>
-      <div className={`modal-overlay ${isModalOpen ? "open" : ""}`}>
-        <div className="modal">
-          <LogoDark
-            className="modal__logo"
-            width={156}
-            height={35}
-            aria-hidden={true}
-          />
-          <input
-            className="modal__field"
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            className="modal__field"
-            type="password"
-            placeholder="Enter your password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button className="btn modal__btn-close" onClick={handleClose}>
-            <IconClose
-              className="modal__btn-close-icon"
-              width={24}
-              height={24}
-              aria-hidden={true}
-            />
-          </button>
-          <button className="btn btn--secondary " onClick={handleLogin}>
-            Войти
-          </button>
+
+          {isAuthenticated ? (
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "header__nav-link active" : "header__nav-link"
+              }
+              to="/account"
+            >
+              {username}
+            </NavLink>
+          ) : (
+            <button className="btn header__btn-login" onClick={handleOpenModal}>
+              Login
+            </button>
+          )}
+
+          <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
       </div>
     </header>

@@ -1,0 +1,31 @@
+.socials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border: 1px solid rgba($color: #ffffff, $alpha: 0.8);
+    padding: 3px;
+    border-radius: 6px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #67a5eb;
+      border: 1px solid #67a5eb;
+    }
+  }
+
+  &__icon {
+    min-width: 24px;
+    color: #ffffff;
+  }
+}

@@ -1,0 +1,54 @@
+.custom-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  & svg {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: rgba($color: #000000, $alpha: 0.4);
+    transition: color 0.3s ease-in-out;
+  }
+
+  & input {
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 24px;
+    border-radius: 8px;
+    min-width: 340px;
+    padding: 16px 16px 16px 52px;
+    color: #000000;
+    border: 1px solid rgba($color: #000000, $alpha: 0.4);
+    outline: none;
+    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+    &::placeholder {
+      font-size: 18px;
+      line-height: 24px;
+      color: rgba($color: #000000, $alpha: 0.4);
+    }
+
+    &:hover,
+    &:focus-visible {
+      border-color: #b4a9ff;
+      + svg {
+        color: #b4a9ff;
+      }
+    }
+  }
+
+  &.error input {
+    border-color: #ff7575;
+
+    &:focus-visible {
+      border-color: #ff7575;
+    }
+
+    + svg {
+      color: #ff7575;
+    }
+  }
+}

@@ -1,12 +1,22 @@
-import Header from "./components/Header/Header";
-import RandomFilm from "./components/RandomFilmBanner/RandomFilm";
+import Layout from "./ui/Layout/Layout.tsx";
+import HomePage from "./pages/HomePage/HomePage";
+import AccountPage from "./pages/AccountPage/AccountPage.tsx";
+import { BrowserRouter, Routes, Route } from "react-router";
+import MoviePage from "./pages/MoviePage/MoviePage.tsx";
+import GenresPage from "./pages/GenresPage/GenresPage.tsx";
 
 function App() {
   return (
-    <>
-      <Header />
-      <RandomFilm />
-    </>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/genres" element={<GenresPage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/movie/:id" element={<MoviePage />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 

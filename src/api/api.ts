@@ -1,5 +1,8 @@
 import axios from "axios";
 
+let onUnauthorized: (() => void) | null = null;
+export const setOnUnauthorized = (cb: () => void) => (onUnauthorized = cb);
+
 export const api = axios.create({
   baseURL: "https://cinemaguide.skillbox.cc/",
   withCredentials: true, // Ensure cookies are sent with requests
@@ -10,10 +13,8 @@ export const api = axios.create({
 
 api.interceptors.response.use(
   (res) => res,
-  (error) => {
-    if (error?.response?.status === 401) {
-      store.dispatch(logout());
-    }
-    return Promise.reject(error);
+  (err) => {
+    if (err.response?.status === 401) onUnauthorized?.();
+    return Promise.reject(err);
   }
 );
