@@ -1,41 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Modal.scss";
 
 import IconClose from "../../assets/icons/IconClose.svg?react";
 import LogoDark from "../../assets/icons/vk-marusya-logo-dark.svg?react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { z } from "zod";
-import CustomInput from "../../ui/TextField/CustomInput";
-
-import IconEmail from "../../assets/icons/IconEmail.svg?react";
-import IconPassword from "../../assets/icons/IconPassword.svg?react";
-import { authApi } from "../../api/auth.api";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../store/authSlice";
+import LoginForm from "../../ui/AuthForms/LoginForm";
+import RegisterForm from "../../ui/AuthForms/RegisterForm";
+import ErrorModal from "../../ui/AuthForms/ErrorModal";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  type?: "loginForm" | "registerForm" | "successModal" | "errorModal";
 }
 
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
-type FormFields = z.infer<typeof schema>;
-
-const Modal = ({ isOpen, onClose }: ModalProps) => {
-  const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-  } = useForm<FormFields>({
-    resolver: zodResolver(schema),
-  });
+const Modal = ({ isOpen, onClose, type = "loginForm" }: ModalProps) => {
+  const [mode, setMode] = useState(type);
 
   useEffect(() => {
     if (isOpen) {
@@ -49,23 +28,23 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
     }
   }, [isOpen]);
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      const response = await authApi.login(data);
-      if (response.result) {
-        const profile = await authApi.getUser();
-        dispatch(setUser(profile));
-
+  // Add keyboard event listener for Escape key
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
         onClose();
-      } else {
-        setError("root", { message: "Ошибка авторизации" });
       }
-    } catch (error) {
-      setError("root", {
-        message: "Email или пароль неверные",
-      });
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
     }
-  };
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   const handleClose = () => {
     onClose();
@@ -88,44 +67,21 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
             aria-hidden={true}
           />
         </button>
-        <form className="modal-form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="modal-form__input">
-            <CustomInput className={errors.email ? "error" : ""}>
-              <input type="email" placeholder="Email" {...register("email")} />
-              <IconEmail />
-            </CustomInput>
-            {errors.email && (
-              <span className="modal-form__error">{errors.email.message}</span>
-            )}
-          </div>
-
-          <div className="modal-form__input">
-            <CustomInput className={errors.password ? "error" : ""}>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                {...register("password")}
-              />
-              <IconPassword />
-            </CustomInput>
-            {errors.password && (
-              <span className="modal-form__error">
-                {errors.password.message}
-              </span>
-            )}
-          </div>
-
-          <button
-            className="btn btn--secondary"
-            disabled={isSubmitting}
-            type="submit"
-          >
-            {isSubmitting ? "Загрузка..." : "Войти"}
-          </button>
-          {errors.root && (
-            <span className="modal-form__error">{errors.root.message}</span>
-          )}
-        </form>
+        {mode === "loginForm" && (
+          <>
+            <LoginForm onClose={onClose} setMode={setMode} />
+          </>
+        )}
+        {mode === "registerForm" && (
+          <>
+            <RegisterForm setMode={setMode} />
+          </>
+        )}
+        {mode === "errorModal" && (
+          <>
+            <ErrorModal setMode={setMode} />
+          </>
+        )}
       </div>
     </div>
   );

@@ -12,6 +12,14 @@
     gap: 80px;
   }
 
+  &__logo {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 600;
+    color: $color-white;
+    text-decoration: none;
+  }
+
   &__inner {
     display: flex;
     align-items: center;
@@ -101,6 +109,7 @@
   }
 
   &__btn-login {
+    border: none;
     font-size: 24px;
     line-height: 32px;
     color: $color-white;

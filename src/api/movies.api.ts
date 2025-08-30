@@ -17,7 +17,7 @@ export const moviesApi = {
       if (filters?.count !== undefined) {
         params.count = filters.count;
       } else {
-        params.count = 100; // По умолчанию как указано в API
+        params.count = 50; // По умолчанию как указано в API
       }
 
       if (filters?.page !== undefined) {

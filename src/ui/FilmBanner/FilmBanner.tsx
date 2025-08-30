@@ -3,7 +3,17 @@ import type { Movie } from "../../types/Movies";
 import IconStar from "../../assets/icons/IconStar.svg?react";
 import IconFavorites from "../../assets/icons/IconFavorites.svg?react";
 import IconRefresh from "../../assets/icons/IconRefresh.svg?react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { favoritesApi } from "../../api/favorites.api";
+import { useDispatch, useSelector } from "react-redux";
+import MoviePlaceholder from "../../assets/MoviePlaceholder.jpg";
+import {
+  addFavorite,
+  removeFavorite,
+  selectFavorites,
+} from "../../store/favoriteSlice";
+import Modal from "../../components/Modal/Modal";
+import { useState } from "react";
 
 interface FilmBannerProps {
   film: Movie;
@@ -18,10 +28,23 @@ const FilmBanner = ({
   showRefresh = true,
   showAbout = true,
 }: FilmBannerProps) => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const favorites = useSelector(selectFavorites);
+  const inFavorites = favorites?.includes(film.id.toString()) || false;
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
-  const handleMovieClick = async (movieId: number) => {
-    navigate(`/movie/${movieId}`);
+  const toggleFavorites = async (movieId: string) => {
+    try {
+      if (inFavorites) {
+        await favoritesApi.removeFavorite(movieId);
+        dispatch(removeFavorite(movieId));
+      } else {
+        await favoritesApi.addFavorite(movieId);
+        dispatch(addFavorite(movieId));
+      }
+    } catch (error) {
+      setShowErrorModal(true);
+    }
   };
 
   return (
@@ -51,19 +74,28 @@ const FilmBanner = ({
           <h2 className="film-banner__info-title">{film?.title}</h2>
           <p className="film-banner__info-description">{film?.plot}</p>
           <div className="film-banner__actions">
-            <button className="btn btn--secondary film-banner__trailer">
+            <Link
+              className="btn btn--secondary film-banner__trailer"
+              to={film?.trailerUrl || "#"}
+              target="_blank"
+            >
               Trailer
-            </button>
+            </Link>
             {showAbout && (
-              <button
+              <Link
                 className="btn btn--primary film-banner__about"
-                onClick={() => handleMovieClick(film.id)}
+                to={`/movie/${film.id}`}
               >
                 About
-              </button>
+              </Link>
             )}
 
-            <button className="btn btn--primary btn--primary-small film-banner__favorites">
+            <button
+              className={`btn film-banner__favorites-btn ${
+                inFavorites ? "added" : ""
+              }`}
+              onClick={() => toggleFavorites(film.id.toString())}
+            >
               <IconFavorites
                 className="film-banner__favorites-icon"
                 width={24}
@@ -86,13 +118,26 @@ const FilmBanner = ({
             )}
           </div>
         </div>
-        <img
-          className="film-banner__poster"
-          src={film?.posterUrl}
-          alt={`post for ${film?.title} movie`}
-          loading="lazy"
-        />
+        {film?.posterUrl === null ? (
+          <img
+            className="film-banner__poster"
+            src={MoviePlaceholder}
+            loading="lazy"
+          />
+        ) : (
+          <img
+            className="film-banner__poster"
+            src={film?.posterUrl}
+            alt={`post for ${film?.title} movie`}
+            loading="lazy"
+          />
+        )}
       </div>
+      <Modal
+        isOpen={showErrorModal}
+        onClose={() => setShowErrorModal(false)}
+        type="errorModal"
+      />
     </div>
   );
 };

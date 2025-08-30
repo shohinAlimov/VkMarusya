@@ -1,4 +1,5 @@
 import type {
+  LoginFormData,
   Profile,
   RegisterResponse,
   successfulResult,
@@ -7,10 +8,7 @@ import type {
 import { api } from "./api";
 
 export const authApi = {
-  async login(data: {
-    email: string;
-    password: string;
-  }): Promise<successfulResult> {
+  async login(data: LoginFormData): Promise<successfulResult> {
     try {
       const response = await api.post("/auth/login", data);
       return response.data;
@@ -39,7 +37,7 @@ export const authApi = {
       const response = await api.get("/profile");
       return response.data;
     } catch (error) {
-      throw new Error(`Failed to logout: ${error}`);
+      throw new Error(`Failed to get profile: ${error}`);
     }
   },
 };

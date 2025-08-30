@@ -1,6 +1,5 @@
 import "./Header.scss";
 import { NavLink } from "react-router-dom";
-import Logo from "../../assets/icons/vk-marusya-logo.svg?react";
 import IconSearch from "../../assets/icons/IconSearch.svg?react";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
@@ -28,12 +27,7 @@ const Header = () => {
       <div className="container">
         <div className="header__wrapper">
           <a className="header__logo" href="/">
-            <Logo
-              className="header__logo-icon"
-              width={136}
-              height={32}
-              aria-hidden={true}
-            />
+            FilmCave
           </a>
           <div className="header__inner">
             <nav className="header__nav">
@@ -89,7 +83,6 @@ const Header = () => {
               Login
             </button>
           )}
-
           <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
       </div>

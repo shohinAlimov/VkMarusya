@@ -4,6 +4,7 @@ import { clearUser, setLoading, setUser } from "../store/authSlice";
 import { authApi } from "../api/auth.api";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
+import Loader from "../ui/Loader/Loader";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -35,7 +36,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [dispatch]);
 
   if (isLoading) {
-    return <></>;
+    return <Loader />;
   }
 
   return <>{children}</>;
