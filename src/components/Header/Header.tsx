@@ -104,7 +104,7 @@ const Header = () => {
             </li>
             <li>
               {isAuthenticated ? (
-                <Link className="header__mobile-account" to="/account">
+                <Link className="btn header__mobile-button" to="/account">
                   <IconUser
                     className="header__mobile-icon"
                     width={24}

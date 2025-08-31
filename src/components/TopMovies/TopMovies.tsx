@@ -48,15 +48,15 @@ const TopMovies = () => {
             breakpoints={{
               310: {
                 slidesPerView: 1.5,
-                spaceBetween: 40,
+                spaceBetween: 20,
               },
               375: {
                 slidesPerView: 1.5,
-                spaceBetween: 40,
+                spaceBetween: 20,
               },
               425: {
                 slidesPerView: 1.7,
-                spaceBetween: 40,
+                spaceBetween: 20,
               },
               1024: {
                 slidesPerView: 3,
