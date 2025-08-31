@@ -7,7 +7,7 @@ import GenresPage from "./pages/GenresPage/GenresPage.tsx";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/VkMarusya">
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />

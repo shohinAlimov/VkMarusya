@@ -6,7 +6,6 @@ import "./TopMovies.scss";
 import FilmCard from "../../ui/FilmCard/FilmCard";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
