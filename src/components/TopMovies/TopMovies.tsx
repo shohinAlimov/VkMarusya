@@ -5,6 +5,12 @@ import Loader from "../../ui/Loader/Loader";
 import "./TopMovies.scss";
 import FilmCard from "../../ui/FilmCard/FilmCard";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/swiper-bundle.css";
+
 const TopMovies = () => {
   const [topFilms, setTopFilms] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,13 +38,39 @@ const TopMovies = () => {
       <div className="container">
         <h2 className="top-movies__title">Top 10 films</h2>
         <div className="top-movies__wrapper">
-          <ul className="top-movies__list">
+          <Swiper
+            className="top-movies__slider-container"
+            spaceBetween={50}
+            slidesPerView={3}
+            loop={true}
+            autoplay={{
+              delay: 10000,
+            }}
+            breakpoints={{
+              310: {
+                slidesPerView: 1.5,
+                spaceBetween: 40,
+              },
+              375: {
+                slidesPerView: 1.5,
+                spaceBetween: 40,
+              },
+              425: {
+                slidesPerView: 1.7,
+                spaceBetween: 40,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 50,
+              },
+            }}
+          >
             {topFilms.map((film, index) => (
-              <li className="top-movies__item" key={film.id}>
+              <SwiperSlide key={film.id}>
                 <FilmCard film={film} index={index} />
-              </li>
+              </SwiperSlide>
             ))}
-          </ul>
+          </Swiper>
         </div>
       </div>
     </section>

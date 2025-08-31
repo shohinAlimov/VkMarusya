@@ -1,9 +1,8 @@
 @use "../../assets/styles/variables.scss" as *;
 
 .film-banner {
-  &__hero {
-    margin: 40px 0 20px;
-  }
+  padding: 40px 0 20px;
+
   &__wrapper {
     display: grid;
     grid-template-columns: auto auto;
@@ -58,9 +57,7 @@
       background-color: #308e21;
     }
 
-    &-release,
-    &-genre,
-    &-duration {
+    &-text {
       font-size: 18px;
       line-height: 24px;
       color: rgba($color: $color-white, $alpha: 0.7);
@@ -101,5 +98,68 @@
   &__about,
   &__trailer {
     text-decoration: none;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 426px) {
+  .film-banner {
+    padding: 10px 0;
+    &__wrapper {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: unset;
+    }
+
+    &__poster {
+      min-width: unset;
+      max-width: unset;
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    &__info {
+      padding: 24px 0;
+      gap: 12px;
+
+      &-top {
+        flex-wrap: wrap;
+      }
+
+      &-text {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      &-title {
+        font-size: 24px;
+        line-height: 32px;
+      }
+
+      &-description {
+        font-size: 18px;
+        line-height: 24px;
+        margin: 0 0 20px 0;
+      }
+    }
+
+    &__actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &__trailer.wide {
+      grid-column: 1/4;
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .film-banner {
+    &__about.wide {
+      grid-column: 1/4;
+    }
   }
 }

@@ -20,6 +20,7 @@ body {
 }
 
 .btn {
+  border: none;
   cursor: pointer;
   font-family: inherit;
   display: inline-flex;
@@ -27,13 +28,8 @@ body {
   justify-content: center;
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 
-  &:active {
-    transform: translateY(3px);
-  }
-
   &--primary,
   &--secondary {
-    border: none;
     padding: 16px 48px;
     border-radius: 28px;
     font-size: 18px;

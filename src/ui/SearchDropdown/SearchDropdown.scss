@@ -1,0 +1,117 @@
+@use "../../assets/styles/variables.scss" as *;
+
+.search-dropdown {
+  position: relative;
+  width: 100%;
+
+  &__icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__field {
+    border: none;
+    padding: 12px 52px;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #393b3c;
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 24px;
+    color: $color-white;
+    outline: none;
+
+    &::placeholder {
+      font-size: 18px;
+      line-height: 24px;
+      color: rgba($color: #ffffff, $alpha: 0.4);
+    }
+  }
+
+  &__list {
+    right: 0;
+    margin: 0;
+    padding: 8px;
+    opacity: 0;
+    user-select: none;
+    list-style: none;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #393b3c;
+    margin: 8px 0 0 0;
+    border-radius: 8px;
+    min-width: 600px;
+    transition: opacity 0.3s ease-in;
+
+    &.show {
+      opacity: 1;
+      user-select: auto;
+    }
+  }
+
+  &__card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 8px;
+    transition: background-color 0.3s ease-in;
+    border-radius: 8px;
+    text-decoration: none;
+    &:hover {
+      background-color: #4b4e4f;
+    }
+
+    &-img {
+      width: 40px;
+      height: 52px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    &-rating {
+      padding: 2px 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background-color: #fff;
+    }
+
+    &-text {
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+      color: rgba($color: $color-white, $alpha: 0.7);
+    }
+
+    &-title {
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 700;
+      color: $color-white;
+      margin: 0;
+    }
+  }
+
+  &__btn-refresh {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    color: $color-white;
+  }
+}

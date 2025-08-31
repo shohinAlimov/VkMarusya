@@ -1,14 +1,18 @@
-import "./Header.scss";
-import { NavLink } from "react-router-dom";
-import IconSearch from "../../assets/icons/IconSearch.svg?react";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
+import SearchDropdown from "../../ui/SearchDropdown/SearchDropdown";
+
+/* Icons */
+import IconUser from "../../assets/icons/IconUser.svg?react";
+import IconSearch from "../../assets/icons/IconSearch.svg?react";
+import IconGenres from "../../assets/icons/IconGenres.svg?react";
+import "./Header.scss";
 
 const Header = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-
   const username = useSelector((state: RootState) => state.auth.user?.name);
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -26,9 +30,9 @@ const Header = () => {
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
-          <a className="header__logo" href="/">
+          <Link className="header__logo" to="/">
             FilmCave
-          </a>
+          </Link>
           <div className="header__inner">
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -54,35 +58,75 @@ const Header = () => {
                 </li>
               </ul>
             </nav>
-            <div className="header__search">
-              <IconSearch
-                className="header__search-icon"
-                width={24}
-                height={24}
-                aria-hidden={true}
-              />
-              <input
-                className="header__search-field"
-                type="text"
-                placeholder="Search"
-              />
-            </div>
+            <SearchDropdown />
           </div>
 
-          {isAuthenticated ? (
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "header__nav-link active" : "header__nav-link"
-              }
-              to="/account"
-            >
-              {username}
-            </NavLink>
-          ) : (
-            <button className="btn header__btn-login" onClick={handleOpenModal}>
-              Login
-            </button>
-          )}
+          <div className="header__auth">
+            {isAuthenticated ? (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "header__nav-link active" : "header__nav-link"
+                }
+                to="/account"
+              >
+                {username}
+              </NavLink>
+            ) : (
+              <button
+                className="btn header__btn-login"
+                onClick={handleOpenModal}
+              >
+                Login
+              </button>
+            )}
+          </div>
+
+          <ul className="header__mobile-nav">
+            <li>
+              <Link className="btn header__mobile-button" to="/genres">
+                <IconGenres
+                  className="header__mobile-icon"
+                  width={24}
+                  height={24}
+                  aria-label="Go to the Genres Page"
+                />
+              </Link>
+            </li>
+            <li>
+              <button className="btn header__mobile-button" type="button">
+                <IconSearch
+                  className="header__mobile-icon"
+                  width={24}
+                  height={24}
+                  aria-label="Go to the Account"
+                />
+              </button>
+            </li>
+            <li>
+              {isAuthenticated ? (
+                <Link className="header__mobile-account" to="/account">
+                  <IconUser
+                    className="header__mobile-icon"
+                    width={24}
+                    height={24}
+                    aria-label="Go to the Account"
+                  />
+                </Link>
+              ) : (
+                <button
+                  className="btn header__mobile-button"
+                  onClick={handleOpenModal}
+                >
+                  <IconUser
+                    className="header__mobile-icon"
+                    width={24}
+                    height={24}
+                    aria-label="Go to the Login Form"
+                  />
+                </button>
+              )}
+            </li>
+          </ul>
           <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
       </div>

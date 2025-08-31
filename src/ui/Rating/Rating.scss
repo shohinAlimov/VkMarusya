@@ -1,0 +1,45 @@
+@use "../../assets/styles/variables.scss" as *;
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: $color-white;
+  border-radius: 16px;
+
+  &.low {
+    background-color: #777777;
+  }
+
+  &.medium {
+    background-color: #308e21;
+  }
+
+  &.high {
+    background-color: #a59400;
+  }
+
+  &.large {
+    padding: 4px 12px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+
+    & svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &.small {
+    padding: 2px 8px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+
+    & svg {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
